@@ -1,7 +1,6 @@
 const axios = require('axios')
 
 const count = 300
-
 const reqs = []
 
 for(let i = 0; i < count; i++) {

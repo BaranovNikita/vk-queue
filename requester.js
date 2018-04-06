@@ -13,9 +13,10 @@ module.exports = (queueInstance) => {
         if (data.error) {
           console.error(data.error.error_msg)
         }
-        queueInstance.remove(id)
       } catch (e) {
         console.error(e)
+      } finally {
+        queueInstance.remove(id)
       }
     })
   }
