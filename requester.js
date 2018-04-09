@@ -3,7 +3,7 @@ const MAX_REQUEST_PER_SECOND = 10
 
 module.exports = (queueInstance) => {
   const loop = () => {
-    console.log('queue length', queueInstance.queue.length)
+    // console.log('queue length', queueInstance.queue.length)
     const current = queueInstance.getFirstMany(MAX_REQUEST_PER_SECOND)
     current.forEach(async (request) => {
       const { id, url, body, headers, method, query } = request
