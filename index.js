@@ -1,7 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const Queue = require('./Queue')
 const nanoid = require('nanoid')
+const morgan = require('morgan')
+
+const Queue = require('./Queue')
 
 const queue = new Queue()
 const port = 3000
@@ -10,6 +12,8 @@ require('./requester')(queue)
 
 const server = express()
 
+server.use(morgan('combined'))
+
 server.use(bodyParser.urlencoded({
   extended: true
 }))
@@ -17,17 +21,15 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json())
 
 server.post('/send', (req, res) => {
-  const { headers, body } = req
+  const { headers, body, query } = req
   delete headers.host
   queue.add({
     id: nanoid(),
-    url: 'http://localhost:3000/',
+    url: 'https://api.vk.com/method/messages.send',
     body,
-    headers: {
-      ...headers,
-      'content-type': 'application/json;charset=utf-8'
-    },
-    method: 'post'
+    headers,
+    method: 'post',
+    query
   })
   res.json({
     success: true
