@@ -1,6 +1,5 @@
 const axios = require('axios')
-const MAX_REQUEST_COUNT = 1
-const PER_MS = 1000 * 60
+const { MAX_REQUEST_COUNT,PER_TIME_MS } = require('./config')
 
 module.exports = (queueInstance) => {
   const loop = () => {
@@ -26,5 +25,5 @@ module.exports = (queueInstance) => {
     })
   }
 
-  setInterval(loop, PER_MS)
+  setInterval(loop, PER_TIME_MS)
 }
