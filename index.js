@@ -4,6 +4,7 @@ const nanoid = require('nanoid')
 const morgan = require('morgan')
 
 const Queue = require('./Queue')
+const { MAX_REQUEST_COUNT,PER_TIME_MS } = require('./config')
 
 const queue = new Queue()
 const port = 3000
@@ -45,5 +46,5 @@ server.post('/', (req, res) => {
 
 server.listen(port, (err) => {
   if (err) throw err
-  console.log(`> Ready on http://localhost:${port}`)
+  console.log(`> Ready on http://localhost:${port} with MAX COUNT = ${MAX_REQUEST_COUNT} and TIME = ${MAX_REQUEST_COUNT}`)
 })
