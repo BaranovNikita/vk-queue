@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { MAX_REQUEST_COUNT,PER_TIME_MS } = require('./config')
+const { MAX_REQUEST_COUNT, PER_TIME_MS } = require('./config')
 
 module.exports = (queueInstance) => {
   const loop = () => {
