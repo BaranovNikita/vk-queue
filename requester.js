@@ -7,6 +7,7 @@ module.exports = (queueInstance) => {
     const current = queueInstance.getFirstMany(MAX_REQUEST_PER_SECOND)
     current.forEach(async (request) => {
       const { id, url, body, headers, method, query } = request
+      console.log(request)
       try {
         const { data } = await axios[method](url, body, {
           headers,
@@ -14,6 +15,8 @@ module.exports = (queueInstance) => {
         })
         if (data.error) {
           console.error(data.error.error_msg)
+        } else {
+          console.log('success', data)
         }
       } catch (e) {
         console.error(e)
