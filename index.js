@@ -21,15 +21,14 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json())
 
 server.post('/send', (req, res) => {
-  const { headers, body, query } = req
+  const { headers, body } = req
   delete headers.host
   queue.add({
     id: nanoid(),
     url: 'https://api.vk.com/method/messages.send',
     body,
     headers,
-    method: 'post',
-    query
+    method: 'post'
   })
   res.json({
     success: true

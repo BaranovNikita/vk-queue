@@ -6,12 +6,11 @@ module.exports = (queueInstance) => {
     // console.log('queue length', queueInstance.queue.length)
     const current = queueInstance.getFirstMany(MAX_REQUEST_PER_SECOND)
     current.forEach(async (request) => {
-      const { id, url, body, headers, method, query } = request
-      console.log(request)
+      const { id, url, body, headers, method } = request
       try {
         const { data } = await axios[method](url, body, {
           headers,
-          params: query
+          params: body
         })
         if (data.error) {
           console.error(data.error.error_msg)
