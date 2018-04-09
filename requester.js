@@ -1,10 +1,11 @@
 const axios = require('axios')
-const MAX_REQUEST_PER_SECOND = 10
+const MAX_REQUEST_COUNT = 1
+const PER_MS = 1000 * 60
 
 module.exports = (queueInstance) => {
   const loop = () => {
     // console.log('queue length', queueInstance.queue.length)
-    const current = queueInstance.getFirstMany(MAX_REQUEST_PER_SECOND)
+    const current = queueInstance.getFirstMany(MAX_REQUEST_COUNT)
     current.forEach(async (request) => {
       const { id, url, body, headers, method } = request
       try {
@@ -13,17 +14,17 @@ module.exports = (queueInstance) => {
           params: body
         })
         if (data.error) {
-          console.error(data.error.error_msg)
+          console.error(data.error.error_msg, new Date())
         } else {
-          console.log('success', data)
+          console.log('success', data, new Date())
         }
       } catch (e) {
-        console.error(e)
+        console.error(e, new Date())
       } finally {
         queueInstance.remove(id)
       }
     })
   }
 
-  setInterval(loop, 1000)
+  setInterval(loop, PER_MS)
 }
