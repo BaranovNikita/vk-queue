@@ -11,7 +11,7 @@ for(let i = 0; i < count; i++) {
   })
 }
 
-console.log(reqs.length)
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 const sendRequests = () => {
   reqs.forEach(({ body }) => {
@@ -25,6 +25,12 @@ const sendRequests = () => {
   })
 }
 
-setInterval(() => {
-  sendRequests()
-}, 1000)
+const main = async () => {
+  for(let i = 0; i < 5; i++) {
+    console.log(i, new Date())
+    sendRequests()
+    await delay(1000)
+  }
+}
+
+main()

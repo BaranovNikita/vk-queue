@@ -4,7 +4,7 @@ const nanoid = require('nanoid')
 const morgan = require('morgan')
 
 const Queue = require('./Queue')
-const { MAX_REQUEST_COUNT, PER_TIME_MS } = require('./config')
+const { MAX_REQUEST_COUNT, PER_TIME_MS, LINK } = require('./config')
 
 const queue = new Queue()
 const port = 3000
@@ -26,7 +26,7 @@ server.post('/send', (req, res) => {
   delete headers.host
   queue.add({
     id: nanoid(),
-    url: 'https://api.vk.com/method/messages.send',
+    url: LINK || 'https://api.vk.com/method/messages.send',
     body,
     headers,
     method: 'post'
